@@ -28,10 +28,11 @@ public class ChatHandler implements Runnable
     public void run()
     {
         String input = "";
-        while(true)
-        {
+
             try {
-                if (!(input = in.readLine()).equalsIgnoreCase("end"))
+                while(true)
+                {
+                if (!(input = in.readLine()).equalsIgnoreCase("exit"))
                 {
                     if(input.startsWith("login"))
                     {
@@ -58,12 +59,29 @@ public class ChatHandler implements Runnable
                             sendMessage(username +" is not online");
                         }
                     }
+                    else if(input.startsWith("lst"))
+                    {
+                        String onlineUsers="lst:";
+                        for(String user: online.keySet())
+                        {
+                            onlineUsers+= user + "~";
+                        }
+                        out.println(onlineUsers);
+                    }
                 }
+                else
+                {
+                    sendToAll(username + " has left the chat");
+                    online.remove(username);
+                }
+                }
+
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-        }
+
     }
 
     public void sendToAll(String msg)

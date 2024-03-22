@@ -21,11 +21,15 @@ public class Client
             String usersInput = "";
             while(!usersInput.equalsIgnoreCase("exit"))
             {
-                System.out.print(">");
                 usersInput = kb.nextLine();
+                if(usersInput.equalsIgnoreCase("exit"))
+                {
+                    listner.setActive(false);
+                }
                 out.println(usersInput);
 
             }
+
 
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
